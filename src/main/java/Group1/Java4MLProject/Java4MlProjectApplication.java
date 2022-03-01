@@ -8,7 +8,6 @@ public class Java4MlProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Java4MlProjectApplication.class, args);
-		System.out.println("HHHH");
 	}
 
 }
