@@ -1,4 +1,4 @@
-# Java-for-ML-Project
+# Java-For-ML-Project
 This is The Final Project of the "Java and Uml Programming" Course as a part of the Foundation Period of ITI 9 month program AI track.
 
 
