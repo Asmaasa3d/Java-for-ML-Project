@@ -31,7 +31,7 @@ This is The Final Project of the "Java and Uml Programming" Course as a part of 
 12. Apply K-means for job title and companies (Bounce )
 
 
-#Dataset
+# Dataset
 Wuzzuf jobs in Egypt dataset at Kaggle
 
     https://www.kaggle.com/omarhanyy/wuzzuf-jobs
@@ -39,7 +39,7 @@ Wuzzuf jobs in Egypt dataset at Kaggle
 
     
     
-#Team Members:
+# Team Members:
 
 • Asmaa Saeed
 
