@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface JobDaoI {
-     public  String getJobs();
 
      public String getSchema();
      public String cleanData();
-     public List<Job> GetAllData();
+//     public List<Job> GetAllData();
      public  String viewSampleData();
      public String CountJobsForEachCompany ();
      public void Showpiechart (List<String> companies, List<Integer> counts);
@@ -23,15 +22,6 @@ public interface JobDaoI {
      public  String factorizeYears( );
      public DataFrame FactorizeData(DataFrame df);
      public void KmeanGraph() throws IOException;
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -43,7 +43,6 @@ public class Controller    {
     @GetMapping ("/clean")
     public String clean(){
         JobDaoImp tmp=new JobDaoImp();
-        tmp.getJobs();
         tmp.mostPopularJobTitles();
         return tmp.cleanData();
     }
@@ -75,8 +74,6 @@ public class Controller    {
     @GetMapping ("/popularJobTitle")
     public String popular(){
         JobDaoImp tmp=new JobDaoImp();
-        tmp.getJobs();
-//		tmp.mostPopularJobTitles();
         return tmp.mostPopularJobTitles();
     }
 
@@ -85,7 +82,6 @@ public class Controller    {
     @GetMapping ("/JobBarChart")
     public ResponseEntity<byte[]> getJobBarChart() {
         JobDaoImp tmp=new JobDaoImp();
-        tmp.getJobs();
         String pla= tmp.mostPopularJobTitles();
         byte[] image = new byte[0];
         try {
@@ -100,8 +96,6 @@ public class Controller    {
     @GetMapping ("/popularAreas")
     public String getPopularAreas(){
         JobDaoImp tmp=new JobDaoImp();
-        tmp.getJobs();
-//		tmp.mostPopularJobTitles();
         return tmp.mostPopularAreas();
     }
 
@@ -110,8 +104,6 @@ public class Controller    {
     @GetMapping ("/AreaBarChart")
     public ResponseEntity<byte[]> getِAreaBarChart() {
         JobDaoImp tmp=new JobDaoImp();
-        tmp.getJobs();
-//		tmp.mostPopularJobTitles();
         String pla= tmp.mostPopularAreas();
         byte[] image = new byte[0];
         try {
@@ -128,8 +120,6 @@ public class Controller    {
     @GetMapping ("/skillsCount")
     public String skillCnt(){
         JobDaoImp tmp=new JobDaoImp();
-        tmp.getJobs();
-//		tmp.mostPopularJobTitles();
         return tmp.skillsCount();
     }
 
@@ -139,7 +129,6 @@ public class Controller    {
     @GetMapping ("/factorize")
     public String Factorize(){
         JobDaoImp tmp=new JobDaoImp();
-
      return tmp.factorizeYears();
     }
 
@@ -150,7 +139,6 @@ public class Controller    {
     @GetMapping ("/Kmeans")
     public ResponseEntity<byte[]> Kmean() throws IOException {
         JobDaoImp tmp=new JobDaoImp();
-        tmp.getJobs();
         tmp.KmeanGraph();
         byte[] image = new byte[0];
         try {

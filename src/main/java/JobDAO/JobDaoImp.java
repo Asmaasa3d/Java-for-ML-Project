@@ -1,14 +1,12 @@
 package JobDAO;
 
 import org.apache.commons.csv.CSVFormat;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
-
 
 import org.knowm.xchart.*;
 import org.knowm.xchart.style.Styler;
@@ -41,37 +39,6 @@ public class JobDaoImp implements JobDaoI{
             e.printStackTrace ();
         }
         this.df=tmp;
-
-    }
-
-
-@Override
-    public  String viewSampleData() {
-        ListIterator<Tuple> iterator = df.stream ().limit(30).collect (Collectors.toList ()).listIterator ();
-        while (iterator.hasNext () ) {
-            Tuple t = iterator.next ();
-            Job p = new Job ((String)t.get ("Title"),(String)t.get ("Company"),(String)t.get ("Location"),(String)t.get ("Type"),
-                    (String)t.get ("Level"),(String)t.get ("YearsExp"),(String)t.get ("Country"),(String)t.get ("Skills"));
-
-            this.Jobs.add (p);
-
-        }
-        String html = String.format("<h1 style=\"text-align:center;font-family:verdana;background-color:SpringGreen;\">%s</h1>", "Sample From The Data") +
-                "<table style=\"width:100%;text-align: center\">" +
-                "<tr><th>Title</th><th>Company</th><th>Location</th><th>Type</th><th>Level</th><th>YearsExp</th><th>Country</th><th>Skills</th></tr>";
-        for (Job j:this.Jobs){
-            html += "<tr>\n" +"<td>"+j.getTitle()+"</td>\n" +"<td>"+j.getCompany()+"</td>\n" +"<td>"+j.getLocation()+"</td>\n"
-                    +"<td>"+j.getType()+"</td>\n" +"<td>"+j.getLevel()+"</td>\n" +"<td>"+j.getYears_EXP()+"</td>\n"+"<td>"+j.getCountry()+"</td>\n"+"<td>"+j.getSkills()
-                    +"</td>\n"+"  </tr>";
-        }
-
-        return html;
-
-
-    }
-@Override
-    public  String getJobs() {
-
         ListIterator<Tuple> iterator = df.stream ().collect (Collectors.toList ()).listIterator ();
         while (iterator.hasNext () ) {
             Tuple t = iterator.next ();
@@ -80,8 +47,29 @@ public class JobDaoImp implements JobDaoI{
             this.Jobs.add (p);
 
         }
-       return null;
+
     }
+
+
+@Override
+    public  String viewSampleData() {
+
+        ListIterator<Tuple> iterator = df.stream ().limit(30).collect (Collectors.toList ()).listIterator ();
+    String html = String.format("<h1 style=\"text-align:center;font-family:verdana;background-color:SpringGreen;\">%s</h1>", "Sample From The Data") +
+            "<table style=\"width:100%;text-align: center\">" +
+            "<tr><th>Title</th><th>Company</th><th>Location</th><th>Type</th><th>Level</th><th>YearsExp</th><th>Country</th><th>Skills</th></tr>";
+        while (iterator.hasNext () ) {
+            Tuple t = iterator.next ();
+            html += "<tr>\n" +"<td>"+(String)t.get ("Title")+"</td>\n" +"<td>"+(String)t.get ("Company")+"</td>\n" +"<td>"+(String)t.get ("Location")+"</td>\n"
+                    +"<td>"+(String)t.get ("Type")+"</td>\n" +"<td>"+(String)t.get ("Level")+"</td>\n" +"<td>"+(String)t.get ("YearsExp")+"</td>\n"+"<td>"+(String)t.get ("Country")+"</td>\n"+"<td>"+(String)t.get ("Skills")
+                    +"</td>\n"+"  </tr>";
+
+        }
+
+        return html;
+
+    }
+
     @Override
     public String getSchema(){
         String html=String.format("<h1 style=\"text-align:center;font-family:verdana;background-color:SpringGreen;\">%s</h1>", "Summary and Schema") ;
@@ -102,7 +90,7 @@ public class JobDaoImp implements JobDaoI{
         String html=String.format("<h1 style=\"text-align:center;font-family:verdana;background-color:SpringGreen;\">%s</h1>", "Data Cleaning") ;
         int n = df.nrows();
         html+=String.format("<h2 style=\"text-align:center;\"> Total records before cleaning = %d</h2>",  n);
-        DataFrame nonNullData= df.omitNullRows ();
+        DataFrame nonNullData= df.omitNullRows();
         df = df.omitNullRows();
         html+=String.format("<h4 style=\"text-align:center;\"> Number of records having null  = %d</h2>", df.nrows()- nonNullData.nrows ());
         DataFrame DF_NullTitle = DataFrame.of(df.stream().filter(row -> !row.getString("Title").contains("null")));
@@ -122,7 +110,6 @@ public class JobDaoImp implements JobDaoI{
         DataFrame DF_NullSkills = DataFrame.of(df.stream().filter(row -> !row.getString("Skills").contains("null")));
         html+=String.format("<h4 style=\"text-align:center;\"> Number of records having null in Column (Skills)  = %d</h2>", (df.size() - DF_NullSkills.size()));
 
-
         df = DataFrame.of(df.stream().filter(row -> !row.getString("YearsExp").contains("null")));
         df = DataFrame.of(df.stream().filter(row -> !row.getString("Skills").contains("null")));
         List<Tuple> l = df.stream().distinct().collect(Collectors.toList());
@@ -136,22 +123,6 @@ public class JobDaoImp implements JobDaoI{
 
 // 6.Find out what are the most popular job titles.
 //7. Show step 6 in bar chart
-@Override
-    public List<Job> GetAllData(){
-        List<Job> AllJobs=new ArrayList<>();
-        ListIterator<Tuple> iterator = df.stream ().collect (Collectors.toList ()).listIterator ();
-        List<Tuple> withoutDupes = df.stream().distinct().collect(Collectors.toList());
-        int i=withoutDupes.size();
-        while (iterator.hasNext () && i>0) {
-            Tuple t = iterator.next ();
-            Job p = new Job ((String)t.get ("Title"),(String)t.get ("Company"),(String)t.get ("Location"),(String)t.get ("Type"),
-                    (String)t.get ("Level"),(String)t.get ("YearsExp"),(String)t.get ("Country"),(String)t.get ("Skills"));
-            AllJobs.add (p);
-            i--;
-        }
-        return AllJobs;
-    }
-
     public LinkedHashMap<String, Integer> SortByValue (HashMap<String, Integer> ToSortCompany) {
         List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(ToSortCompany.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
@@ -168,7 +139,7 @@ public class JobDaoImp implements JobDaoI{
     }
 @Override
     public String CountJobsForEachCompany () {
-        List<Job> ALLDATA = GetAllData();
+        List<Job> ALLDATA = this.Jobs;
         HashMap<String, Integer> CountCompany = new HashMap<>();
         for(Job job : ALLDATA){
             if (CountCompany.containsKey(job.getCompany())){
@@ -206,8 +177,7 @@ public class JobDaoImp implements JobDaoI{
         return html;
     }
 
-
-    @Override
+@Override
     public void Showpiechart (List<String> companies, List<Integer> counts) {
 
         PieChart chart = new PieChartBuilder().width(1500).height(900).title("Count the jobs for each company (Pie Chart )").build();
@@ -221,12 +191,11 @@ public class JobDaoImp implements JobDaoI{
         }
     }
 
-    @Override
+@Override
     public String skillsCount(){
         Map<Job, List<String>> map = new LinkedHashMap<>();
 
         map=this.Jobs.stream().collect(Collectors.toMap(Job->Job, Job::getSkills_strings));
-//        System.out.println(map);
         List<String> allSkills = map.values() // Collection<List<Integer>>
                 .stream()                      // Stream<List<Integer>>
                 .flatMap(List::stream)         // Stream<Integer>
